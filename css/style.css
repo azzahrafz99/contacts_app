@@ -1,0 +1,20 @@
+.hidden {
+  display: none !important;
+}
+
+.btn-container input[type='submit'] {
+    padding: 0 1.5em;
+    margin: 0 0.5em;
+}
+
+td, th {
+  text-align: center;
+}
+
+td input[type='button'] {
+  margin: 0 2em;
+}
+
+.shaded-background {
+  background-color: #fbfaff;
+}

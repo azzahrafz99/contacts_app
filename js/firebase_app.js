@@ -10,9 +10,10 @@ firebase.initializeApp(config);
 
 
 // Get a reference to the database service
-var database = firebase.database();
+var rootRef = firebase.database().ref().child('contacts');
 
 function writeContacts(uid, name, phone_number) {
+  $('tr').removeClass('shaded-background');
   var database_ref = firebase.database().ref('contacts/' + uid);
 
   database_ref.set({
@@ -23,22 +24,36 @@ function writeContacts(uid, name, phone_number) {
 
   database_ref.once('value', function(snapshot) {
     if (snapshot.val() != null) {
-      $('tbody').append("<tr data-uid='"+uid+"' class='data'><td>"+name+"</td><td><input class='button-small' id='update_name' type='submit' value='Update'></td><td>"+phone_number+"</td><td><input class='button-small' id='update_phone' type='submit' value='Update'></td><td><input class='button-small' id='destroy' type='submit' value='Delete'></td></tr>");
+      $('tbody').append("<tr data-uid='"+uid+"' class='data shaded-background'><td colspan='2'>"+name+"</td><td colspan='2'>"+phone_number+"</td><td colspan='2'><input class='button-small destroy-btn' type='button' value='Delete'><input class='button-small edit-btn' type='button' value='Edit'></td></tr>");
+      clearForm();
     }
   });
   var newContactKey = firebase.database().ref().child('contacts').push().key;
 }
 
-function showContacts(){
-  var ref = firebase.database().ref().child('contacts');
-
-  ref.once("value", function(snapshot) {
+function showContacts(contactId){
+  contactId = contactId || null;
+  rootRef.once("value", function(snapshot) {
     data = snapshot.val();
     var txt;
     for (var key in data) {
       var result = data[key];
-      console.log(result);
-      $('tbody').append("<tr data-uid='"+key+"' class='data'><td>"+result.name+"</td><td><input class='button-small' id='update_name' type='submit' value='Update'></td><td>"+result.phone_number+"</td><td><input class='button-small' id='update_phone' type='submit' value='Update'</td><td><input class='button-small' id='destroy' type='submit' value='Delete'></td></tr>");
+      if (contactId == key) {
+        $('tbody').append("<tr data-uid='"+key+"' class='data shaded-background'><td colspan='2'>"+result.name+"</td><td colspan='2'>"+result.phone_number+"</td><td colspan='2'><input class='button-small destroy-btn' type='button' value='Delete'><input class='button-small edit-btn' type='button' value='Edit'></td></tr>");
+      } else {
+        $('tbody').append("<tr data-uid='"+key+"' class='data'><td colspan='2'>"+result.name+"</td><td colspan='2'>"+result.phone_number+"</td><td colspan='2'><input class='button-small destroy-btn' type='button' value='Delete'><input class='button-small edit-btn' type='button' value='Edit'></td></tr>");
+      }
     }
   });
+}
+
+function updateContact(phone_number, name, contactId) {
+  if (rootRef.child(contactId).update({
+    phone_number: phone_number,
+    name: name
+  })) {
+    $('tbody').html('');
+    showContacts(contactId);
+    clearForm();
+  }
 }

@@ -6,13 +6,11 @@
     <link rel="stylesheet" href="css/milligram-1.3.0/dist/milligram.css">
     <!-- Google Fonts -->
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
-
     <!-- CSS Reset -->
     <link rel="stylesheet" href="//cdn.rawgit.com/necolas/normalize.css/master/normalize.css">
-
     <!-- Milligram CSS minified -->
     <link rel="stylesheet" href="//cdn.rawgit.com/milligram/milligram/master/dist/milligram.min.css">
-
+    <link rel="stylesheet" href="css/style.css">
     <!-- You should properly set the path from the main file. -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   </head>
@@ -20,25 +18,42 @@
     <br>
     <center><h1>Contacts</h1></center>
     <div class="row">
-      <div class="column column-60">
+      <div class="column column-offset-25 column-60">
+        <hr>
+      </div>
+    </div>
+    <div class="row">
+      <div class="column"></div>
+      <div class="column">
+        <input type="text" id="name" name="name" placeholder="Name">
+      </div>
+      <div class="column">
+        <input type="text" id="phone_number" name="phone_number" placeholder="Phone Number">
+        <input type="hidden" id="uid" name="uid">
+      </div>
+      <div class="column btn-container">
+        <input class="button-primary" id="submit" type="submit" value="Submit">
+      </div>
+    </div>
+    <div class="row">
+      <div class="column column-offset-25 column-60">
+        <hr>
+      </div>
+    </div>
+    <div class="row">
+      <div class="column-offset-25 column column-60">
         <table>
           <thead>
             <tr>
               <th colspan="2">Name</th>
               <th colspan="2">Phone Number</th>
-              <th></th>
-              <th></th>
-            </tr>
-            <tr>
-              <td colspan="2"><input type="text" id="name" name="name"></td>
-              <td colspan="2"><input type="text" id="phone_number" name="phone_number"></td>
-              <td><input class="button-primary" id="submit" type="submit" value="Submit"></td>
+              <th colspan="2">Actions</th>
             </tr>
           </thead>
           <tbody>
           </tbody>
         </table>
-        <input class="button-primary" id="destroy-all" type="submit" value="Delete All">
+        <input class="button-primary" id="destroy-all" type="button" value="Delete All">
       </div>
     </div>
 
