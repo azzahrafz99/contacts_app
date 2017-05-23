@@ -21,6 +21,11 @@ function writeContacts(uid, name, phone_number) {
     phone_number: phone_number
   });
 
+  database_ref.once('value', function(snapshot) {
+    if (snapshot.val() != null) {
+      $('tbody').append("<tr data-uid='"+uid+"' class='data'><td>"+name+"</td><td><input class='button-small' id='update_name' type='submit' value='Update'></td><td>"+phone_number+"</td><td><input class='button-small' id='update_phone' type='submit' value='Update'></td><td><input class='button-small' id='destroy' type='submit' value='Delete'></td></tr>");
+    }
+  });
   var newContactKey = firebase.database().ref().child('contacts').push().key;
 }
 
